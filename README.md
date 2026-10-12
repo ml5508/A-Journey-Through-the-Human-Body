@@ -2,8 +2,7 @@
 
 ## Original idea
 
-**Food Adventure: A Journey Through the Human Body** is an interactive learning website for children ages 8–12. It makes the digestive process visible by following one bite of food through the mouth, esophagus, stomach, small intestine, and large intestine.file:///Users/mohanliu/Documents/ChatGPT/MSTU%205003/digestive%20process/index.html
-
+**Food Adventure: A Journey Through the Human Body** is an interactive learning website for children ages 8–12. It makes the digestive process visible by following one bite of food through the mouth, esophagus, stomach, small intestine, and large intestine.
 The goal is to help learners understand three connected ideas: where each digestive organ is located in the body, what each organ does, and how food changes as it moves through the system. The website uses a colorful human-body illustration, labelled organs, short explanations, and controllable animations.
 
 ## Instructions for Opening or Running the Project

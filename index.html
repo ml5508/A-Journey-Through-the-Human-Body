@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Adventure: A Journey Through the Human Body</title>
+  <style>
+    :root { --ink:#263555; --purple:#6d55c9; --purple-dark:#49358f; --peach:#ffb85c; --coral:#f57467; --teal:#43bea9; --blue:#5baee2; --paper:#fffdf7; --line:#d7cbe9; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); font-family:ui-rounded,"Avenir Next",system-ui,sans-serif; background:linear-gradient(135deg,#fff5d9,#f2efff); }
+    main { width:min(1160px,calc(100% - 32px)); margin:auto; padding:30px 0 42px; }
+    header { text-align:center; margin-bottom:22px; }
+    .eyebrow { margin:0 0 8px; color:var(--purple-dark); font-size:.78rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    h1 { margin:0; font-size:clamp(2rem,5vw,3.4rem); line-height:1.05; }
+    .intro { max-width:700px; margin:12px auto 0; line-height:1.5; }
+    .journey { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(310px,.8fr); gap:24px; align-items:stretch; }
+    .body-stage,.lesson { background:var(--paper); border:3px solid rgba(255,255,255,.9); border-radius:28px; box-shadow:0 14px 32px rgba(73,49,124,.15); }
+    .body-stage { min-height:650px; padding:12px; overflow:hidden; background-image:radial-gradient(#eadfc8 1.3px,transparent 1.3px); background-size:22px 22px; }
+    svg { display:block; width:100%; height:610px; }
+    .torso { fill:#bce0f5; opacity:.57; } .outline { fill:none; stroke:#6a7da6; stroke-width:2.5; opacity:.55; }
+    .organ { cursor:pointer; opacity:.52; transition:opacity .25s,filter .25s; transform-box:fill-box; transform-origin:center; }
+    .organ:hover,.organ:focus,.organ.active { opacity:1; filter:drop-shadow(0 0 7px rgba(109,85,201,.55)); outline:none; }
+    .organ.active .organ-fill,.organ.active .organ-stroke { stroke:#49358f; stroke-width:3.5; }
+    .organ-fill { stroke:#9a5d5c; stroke-width:2; } .organ-stroke { fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    .label-line { fill:none; stroke:#8290ab; stroke-width:1.7; } .label-dot { fill:#8290ab; }
+    .label-box { fill:#fffdf7; stroke:#d8cde9; stroke-width:1.5; } .label-text { fill:#263555; font-size:15px; font-weight:800; }
+    .food { filter:drop-shadow(0 3px 2px rgba(99,55,10,.25)); } .bite { fill:#ffdb59; stroke:#b9842c; stroke-width:2; } .bit { fill:#ffdb59; stroke:#b9842c; stroke-width:1.5; opacity:0; } .saliva { fill:#8fd9f0; opacity:0; }
+    .muscle-ring { fill:none; stroke:#ab89dd; stroke-width:6; opacity:0; } .juice { fill:#fff1a6; opacity:0; } .chyme { fill:#d88b57; opacity:0; } .nutrient { opacity:0; } .water { fill:#61b9e8; opacity:0; } .waste { fill:#805f46; opacity:0; }
+    .blood-vessel { fill:none; stroke:#e68a8d; stroke-width:5; stroke-linecap:round; opacity:.6; } .villi { stroke:#e0a44f; stroke-width:2; opacity:.55; }
+    .lesson { display:flex; flex-direction:column; padding:28px; }
+    .progress-text { margin:0 0 9px; color:var(--purple-dark); font-weight:800; font-size:.85rem; letter-spacing:.05em; }
+    .progress { height:10px; overflow:hidden; background:#eee9df; border-radius:99px; margin-bottom:23px; } .progress>div { height:100%; width:20%; background:linear-gradient(90deg,var(--teal),var(--purple)); transition:width .35s; }
+    .tag { align-self:flex-start; padding:7px 12px; border-radius:99px; background:#eee7ff; color:var(--purple-dark); font-size:.85rem; font-weight:800; }
+    h2 { margin:14px 0 8px; font-size:clamp(1.7rem,4vw,2.3rem); line-height:1.05; } #where { margin:0 0 10px; color:#5b6280; font-size:.92rem; font-weight:700; } #description { margin:0; line-height:1.55; font-size:1.04rem; }
+    .change { margin-top:18px; padding:15px; border-radius:17px; background:#fff1c8; line-height:1.45; } .change strong { color:#855300; }
+    .controls { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:auto; padding-top:22px; } button { border:0; border-radius:14px; padding:12px 10px; font:inherit; font-weight:800; color:var(--ink); background:#ece7dc; cursor:pointer; transition:transform .15s,opacity .15s,background .15s; } button:hover:not(:disabled) { transform:translateY(-2px); } button:focus-visible { outline:3px solid var(--teal); outline-offset:3px; } button:disabled { opacity:.42; cursor:not-allowed; } .primary { background:var(--purple); color:white; } .primary:hover:not(:disabled) { background:var(--purple-dark); }
+    .steps { display:flex; justify-content:center; gap:9px; flex-wrap:wrap; margin:22px 4px 0; } .step { display:flex; align-items:center; gap:7px; color:#77728a; font-size:.84rem; font-weight:750; } .step::before { content:""; width:11px; height:11px; border-radius:50%; background:#d9d2c4; } .step.current { color:var(--purple-dark); } .step.current::before,.step.done::before { background:var(--purple); } .step.done { color:var(--ink); }
+    @media (max-width:780px) { .journey { grid-template-columns:1fr; } .body-stage { min-height:520px; } svg { height:485px; } .lesson { min-height:440px; } } @media (max-width:430px) { main { width:min(100% - 20px,1160px); padding-top:20px; } .body-stage,.lesson { border-radius:22px; padding:18px; } svg { height:410px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">A friendly body science adventure</p>
+    <h1>Food Adventure: A Journey Through the Human Body</h1>
+    <p class="intro">Watch one bite travel through the complete digestive system. Use the controls to pause, replay, or move between each stage.</p>
+  </header>
+  <section class="journey" aria-label="Interactive digestive system journey">
+    <div class="body-stage">
+      <svg id="diagram" viewBox="0 0 620 650" role="img" aria-labelledby="diagram-title diagram-desc">
+        <title id="diagram-title">A clearly labelled digestive system</title>
+        <desc id="diagram-desc">The mouth, esophagus, stomach, small intestine, and large intestine appear in their connected locations inside a simplified human body.</desc>
+        <path class="torso" d="M260 72C218 101 208 159 216 214L167 306 180 598Q310 632 440 598L453 306 404 214C412 159 402 101 360 72Q310 40 260 72Z"/>
+        <circle cx="310" cy="80" r="60" fill="#ffd7b5"/><path d="M255 63Q271 11 310 15Q352 11 367 63" fill="#6d55c9"/><circle cx="290" cy="78" r="5" fill="#263555"/><circle cx="331" cy="78" r="5" fill="#263555"/><path d="M290 93Q310 107 330 93" fill="none" stroke="#b96762" stroke-width="5" stroke-linecap="round"/>
+        <path class="outline" d="M260 72C218 101 208 159 216 214L167 306 180 598Q310 632 440 598L453 306 404 214C412 159 402 101 360 72"/>
+        <g id="mouth" class="organ" tabindex="0" role="button" aria-label="Mouth">
+          <ellipse class="organ-fill" cx="310" cy="104" rx="25" ry="10" fill="#ef92ad"/>
+          <path id="upperTeeth" d="M290 101H330" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+          <path id="lowerTeeth" d="M290 107H330" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <g id="esophagus" class="organ" tabindex="0" role="button" aria-label="Esophagus"><path class="organ-stroke" d="M304 115Q310 160 309 226Q310 242 321 255" stroke="#f3a382" stroke-width="16"/></g>
+        <g id="stomach" class="organ" tabindex="0" role="button" aria-label="Stomach"><path class="organ-fill" d="M321 249C365 236 383 272 368 308C354 340 319 344 288 323C267 309 271 274 296 263C310 257 310 249 321 249Z" fill="#f57467"/></g>
+        <g id="large-intestine" class="organ" tabindex="0" role="button" aria-label="Large intestine"><path class="organ-stroke" d="M259 344C222 356 221 478 254 504H365C398 478 397 356 360 344" stroke="#43bea9" stroke-width="24"/></g>
+        <g id="small-intestine" class="organ" tabindex="0" role="button" aria-label="Small intestine"><path class="organ-stroke" d="M314 344C276 350 264 386 285 406C312 430 349 407 337 381C326 358 275 367 270 405C264 447 310 469 344 449C376 430 369 380 340 370C305 357 267 388 270 431C273 472 315 487 354 468" stroke="#ffb85c" stroke-width="16"/><path class="villi" d="M278 390l8 5m4 36l8 5m28-46l8 5m-1 52l8 5m-37 10l8 5"/></g>
+        <path class="blood-vessel" d="M390 365Q421 397 390 438Q421 463 388 491"/>
+        <g id="rings"><ellipse class="muscle-ring" cx="309" cy="139" rx="15" ry="8"/><ellipse class="muscle-ring" cx="309" cy="170" rx="15" ry="8"/><ellipse class="muscle-ring" cx="311" cy="205" rx="15" ry="8"/></g>
+        <g id="stomachEffects"><circle class="juice" cx="315" cy="286" r="7"/><circle class="juice" cx="342" cy="300" r="5"/><circle class="juice" cx="330" cy="318" r="4"/><ellipse class="chyme" cx="322" cy="303" rx="25" ry="13"/></g>
+        <g id="nutrients"><circle class="nutrient" cx="300" cy="400" r="6" fill="#6d55c9"/><circle class="nutrient" cx="321" cy="426" r="5" fill="#ef92ad"/><circle class="nutrient" cx="340" cy="443" r="6" fill="#43bea9"/></g>
+        <g id="waterDrops"><path class="water" d="M249 404q8-18 16 0a8 8 0 1 1-16 0"/><path class="water" d="M355 450q8-18 16 0a8 8 0 1 1-16 0"/><ellipse class="waste" cx="320" cy="490" rx="13" ry="9"/></g>
+        <g id="foodPosition" class="food"><g id="food"><circle class="bite" r="13"/><circle class="bite" cx="-5" cy="-3" r="3" fill="#f57467"/><circle class="bite" cx="5" cy="4" r="2.5" fill="#f57467"/><circle class="bit" cx="-9" cy="-3" r="5"/><circle class="bit" cx="3" cy="-8" r="4"/><circle class="bit" cx="8" cy="6" r="5"/><circle class="bit" cx="-5" cy="8" r="3"/><circle class="saliva" cx="-18" cy="-9" r="4"/><circle class="saliva" cx="19" cy="8" r="3"/></g></g>
+        <g aria-hidden="true">
+          <path class="label-line" d="M285 105H176L142 86"/><circle class="label-dot" cx="285" cy="105" r="3"/><rect class="label-box" x="36" y="67" width="106" height="37" rx="9"/><text class="label-text" x="52" y="91">1. Mouth</text>
+          <path class="label-line" d="M302 175H172L138 175"/><circle class="label-dot" cx="302" cy="175" r="3"/><rect class="label-box" x="20" y="156" width="118" height="37" rx="9"/><text class="label-text" x="35" y="180">2. Esophagus</text>
+          <path class="label-line" d="M371 285H479L508 264"/><circle class="label-dot" cx="371" cy="285" r="3"/><rect class="label-box" x="508" y="245" width="96" height="37" rx="9"/><text class="label-text" x="523" y="269">3. Stomach</text>
+          <path class="label-line" d="M373 401H470L504 385"/><circle class="label-dot" cx="373" cy="401" r="3"/><rect class="label-box" x="474" y="366" width="130" height="37" rx="9"/><text class="label-text" x="489" y="390">4. Small intestine</text>
+          <path class="label-line" d="M374 503H464L504 521"/><circle class="label-dot" cx="374" cy="503" r="3"/><rect class="label-box" x="464" y="502" width="140" height="37" rx="9"/><text class="label-text" x="479" y="526">5. Large intestine</text>
+        </g>
+      </svg>
+    </div>
+    <article class="lesson" aria-live="polite">
+      <p class="progress-text" id="progressText"></p><div class="progress"><div id="progressBar"></div></div>
+      <span class="tag" id="tag"></span><h2 id="organName"></h2><p id="where"></p><p id="description"></p>
+      <div class="change"><strong>What changes?</strong><br><span id="change"></span></div>
+      <div class="controls"><button id="previous" type="button">← Previous</button><button id="next" class="primary" type="button">Next →</button><button id="pause" type="button">Pause</button><button id="replay" type="button">↻ Replay stage</button></div>
+    </article>
+  </section>
+  <nav class="steps" id="steps" aria-label="Digestive stages"></nav>
+</main>
+<script>
+  const stages = [
+    { id:'mouth', name:'The Mouth', where:'Location: inside the head, at the beginning of the digestive system.', desc:'Your teeth crush food while saliva wets it and starts to break it down.', change:'A large bite becomes a soft, chewed ball of food called a bolus.' },
+    { id:'esophagus', name:'The Esophagus', where:'Location: a muscular tube running from the throat to the stomach.', desc:'Muscles squeeze in a traveling wave called peristalsis. The wave moves the bolus downward.', change:'The bolus is pushed safely into the stomach.' },
+    { id:'stomach', name:'The Stomach', where:'Location: upper left side of your body, under the ribs.', desc:'Strong muscles churn food with acidic digestive juices.', change:'The food becomes a thick, soupy mixture called chyme.' },
+    { id:'small-intestine', name:'The Small Intestine', where:'Location: coiled in the center of the lower abdomen.', desc:'Tiny finger-like walls absorb nutrients from chyme into the bloodstream.', change:'Nutrient particles leave the food and travel to the blood.' },
+    { id:'large-intestine', name:'The Large Intestine', where:'Location: a wide frame around the small intestine.', desc:'Your body absorbs water from the remaining material.', change:'Less water remains, so the waste becomes more solid.' }
+  ];
+  const $ = id => document.getElementById(id);
+  let stage = 0, playing = true, progress = 0, lastTime = 0, frame, lastDisplayed = -1;
+  const duration = 4200;
+  const organIds = stages.map(s => s.id);
+  function set(el, attrs) { Object.entries(attrs).forEach(([k,v]) => el.setAttribute(k,v)); }
+  function lerp(a,b,t) { return a + (b-a)*t; }
+  function show(el, opacity) { el.style.opacity = opacity; }
+  function resetScene() {
+    document.querySelectorAll('.bit,.saliva,.muscle-ring,.juice,.chyme,.nutrient,.water,.waste').forEach(el => { show(el,0); }); document.querySelectorAll('.bite').forEach(el => show(el,1));
+    set($('foodPosition'), { transform:'translate(310 104)' }); set($('food'), { transform:'translate(0 0) scale(1)' });
+    set($('upperTeeth'), { transform:'translate(0 0)' }); set($('lowerTeeth'), { transform:'translate(0 0)' });
+    set($('stomachEffects'), { transform:'translate(0 0)' }); set($('nutrients'), { transform:'translate(0 0)' }); set($('waterDrops'), { transform:'translate(0 0)' });
+  }
+  function updateDiagram(p) {
+    resetScene();
+    if (stage === 0) {
+      const chew = Math.sin(p * Math.PI * 8) * 3; set($('upperTeeth'), { transform:`translate(0 ${chew})` }); set($('lowerTeeth'), { transform:`translate(0 ${-chew})` });
+      if (p > .2) { document.querySelectorAll('.bite').forEach(el=>show(el,Math.max(0,1-(p-.2)*2))); document.querySelectorAll('.bit').forEach((el,i) => { show(el,1); set(el,{transform:`translate(${(i-1.5)*p*3} 0)`}); }); document.querySelectorAll('.saliva').forEach(el=>show(el,1)); }
+      set($('food'), { transform:`scale(${lerp(1,.62,Math.min(1,p*1.4))})` });
+    }
+    if (stage === 1) {
+      const y = lerp(126,246,p); set($('foodPosition'), { transform:`translate(${lerp(309,321,p)} ${y})` });
+      document.querySelectorAll('.muscle-ring').forEach((el,i) => { const q = p*1.35-i*.22; if(q>0 && q<1){ show(el,1-q); set(el,{cy:lerp(126+i*4,230+i*7,q),rx:lerp(10,19,q)}); } });
+    }
+    if (stage === 2) {
+      const angle=p*900, x=322+Math.cos(p*Math.PI*6)*18, y=293+Math.sin(p*Math.PI*6)*15; set($('foodPosition'), { transform:`translate(${x} ${y})` }); set($('food'), { transform:`rotate(${angle}) scale(${lerp(.7,.52,p)})` });
+      document.querySelectorAll('.juice').forEach((el,i)=>{ show(el,.9); set(el,{transform:`translate(${Math.sin(p*12+i)*10} ${Math.cos(p*10+i)*9})`}); }); show(document.querySelector('.chyme'),Math.max(0,p-.32)*1.5);
+    }
+    if (stage === 3) {
+      const x=lerp(288,350,p), y=lerp(378,455,p); set($('foodPosition'), { transform:`translate(${x} ${y})` }); set($('food'), { transform:'scale(.52)' });
+      document.querySelectorAll('.nutrient').forEach((el,i)=>{ const q=Math.max(0,Math.min(1,(p-i*.16)*1.8)); show(el,q<1?1:0); set(el,{transform:`translate(${q*72} ${-q*(22+i*9)}) scale(${1-q*.6})`}); });
+    }
+    if (stage === 4) {
+      const x=lerp(251,356,p), y=lerp(375,492,p); set($('foodPosition'), { transform:`translate(${x} ${y})` }); set($('food'), { transform:`scale(${lerp(.52,.4,p)})` });
+      document.querySelectorAll('.water').forEach((el,i)=>{ const q=Math.max(0,Math.min(1,(p-i*.22)*1.7)); show(el,1-q); set(el,{transform:`translate(${q*64} ${-q*(26+i*8)})`}); }); show(document.querySelector('.waste'),Math.max(0,(p-.45)*2));
+    }
+  }
+  function renderInfo() {
+    const s=stages[stage]; $('progressText').textContent=`STAGE ${stage+1} OF ${stages.length}`; $('progressBar').style.width=`${(stage+1)/stages.length*100}%`;
+    $('tag').textContent=`Stage ${stage+1}: ${s.id.replace('-',' ')}`; $('organName').textContent=s.name; $('where').textContent=s.where; $('description').textContent=s.desc; $('change').textContent=s.change;
+    $('previous').disabled=stage===0; $('next').disabled=stage===stages.length-1; $('next').textContent=stage===stages.length-1?'Journey complete ✓':'Next →'; $('pause').textContent=playing?'Pause':'Resume';
+    organIds.forEach(id => $(id).classList.toggle('active',id===s.id));
+    $('steps').innerHTML=stages.map((x,i)=>`<span class="step ${i<stage?'done':''} ${i===stage?'current':''}">${i+1}. ${x.name.replace('The ','')}</span>`).join('');
+  }
+  function tick(time) {
+    if (!playing) return;
+    if (!lastTime) lastTime=time;
+    progress=Math.min(1,progress+(time-lastTime)/duration); lastTime=time;
+    updateDiagram(progress); if(progress<1) frame=requestAnimationFrame(tick);
+  }
+  function startStage(index) { cancelAnimationFrame(frame); stage=index; progress=0; lastTime=0; playing=true; renderInfo(); tick(performance.now()); }
+  function togglePause() { playing=!playing; renderInfo(); if(playing){lastTime=0; frame=requestAnimationFrame(tick);} }
+  $('next').addEventListener('click',()=>{ if(stage<4) startStage(stage+1); }); $('previous').addEventListener('click',()=>{if(stage>0)startStage(stage-1);}); $('pause').addEventListener('click',togglePause); $('replay').addEventListener('click',()=>startStage(stage));
+  document.querySelectorAll('.organ').forEach(el=>{ const select=()=>startStage(organIds.indexOf(el.id)); el.addEventListener('click',select); el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')select();}); });
+  startStage(0);
+</script>
+</body>
+</html>

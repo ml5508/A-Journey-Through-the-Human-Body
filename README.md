@@ -1,4 +1,4 @@
-# Describe It. Prompt It. Reflect On It
+# Represent a Phenomenon with Code and AI
 
 ## Original idea
 
